@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.apache.ibatis.annotations.*;
 
-import com.example.demo.controller.*;
 import com.example.demo.domain.*;
 
 @Mapper
@@ -45,7 +44,17 @@ public interface BoardMapper {
 			WHERE id = #{id}
 			""")
 	int deleteById(Integer id);
+
+	@Insert("""
+			INSERT INTO Board (title,body,writer)
+			VALUES(#{title},#{body},#{writer})
+			""")
 	
+	@Options(useGeneratedKeys = true,keyProperty = "id")
+	int insert(Board board);
+	
+	
+
 	
 	
 	

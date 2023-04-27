@@ -18,8 +18,8 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 
-	// 경로 : http://localhost:8080
-	// 경로 : http://localhost:8080/list
+	// 경로 : http://localhost:8080?page=3
+	// 경로 : http://localhost:8080/list?page=5
 	// 게시물 목록
 //	@RequestMapping(value = {"/", "list"}, method = RequestMethod.GET)
 	@GetMapping({ "/", "list" })
@@ -58,25 +58,54 @@ public class BoardController {
 		boolean ok = service.modify(board);
 		
 		if (ok) {
-			
-			// 해당 게시물 보기로 이동 리디렉션
-			rttr.addAttribute("success","success");
+			// 해당 게시물 보기로 리디렉션
+//			rttr.addAttribute("success", "success");
+			rttr.addFlashAttribute("message", board.getId() + "번 게시물이 수정되었습니다.");
 			return "redirect:/id/" + board.getId();
-		}else {
-			// 수정 form으로 디리렉션
-			rttr.addAttribute("fail","fail");
+		} else {
+			// 수정 form 으로 리디렉션
+//			rttr.addAttribute("fail", "fail");
+			rttr.addFlashAttribute("message", board.getId() + "번 게시물이 수정되지 않았습니다.");
 			return "redirect:/modify/" + board.getId();
 		}
-		
 	}
+	
 	@PostMapping("remove")
 	public String remove(Integer id, RedirectAttributes rttr) {
 		boolean ok = service.remove(id);
-		if(ok) {
-			rttr.addAttribute("success","remove");
+		if (ok) {
+			// query string에 추가
+//			rttr.addAttribute("success", "remove");
+			
+			// 모델에 추가
+			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
+			
 			return "redirect:/list";
-		}else {
+		} else {
 			return "redirect:/id/" + id;
+		}
+	}
+	
+	@GetMapping("add")
+	public void addForm() {
+		// 게시물 작성 form (view)로 포워드
+	}
+	
+	@PostMapping("add")
+	public String addProcess(Board board, RedirectAttributes rttr) {
+		// 새 게시물 db에 추가
+		// 1.
+		// 2.
+		boolean ok = service.addBoard(board);
+		// 3.
+		// 4.
+		if (ok) {
+			rttr.addFlashAttribute("message", board.getId() + "번 게시물이 등록되었습니다.");
+			return "redirect:/id/" + board.getId();
+		} else {
+			rttr.addFlashAttribute("message", "게시물 등록 중 문제가 발생하였습니다.");
+			rttr.addFlashAttribute("board", board);
+			return "redirect:/add";
 		}
 	}
 }
