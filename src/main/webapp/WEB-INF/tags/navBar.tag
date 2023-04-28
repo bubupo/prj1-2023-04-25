@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 ">
 	<div class="container-lg">
-		<a class="navbar-brand" href="/list">스프링게시판</a>
+		<a class="navbar-brand" href="/list"><img src="/google-logo.png" alt="" height="40" width = "40"/></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,7 +19,7 @@
 			<form class="d-flex" role="search">
 				<input class="form-control me-2" type="search" placeholder="Search"
 					aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
+				<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</form>
 		</div>
 	</div>

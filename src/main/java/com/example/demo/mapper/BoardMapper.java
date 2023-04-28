@@ -9,7 +9,6 @@ import com.example.demo.domain.*;
 @Mapper
 public interface BoardMapper {
 
-	
 	@Select("""
 			SELECT
 				id,
@@ -20,9 +19,9 @@ public interface BoardMapper {
 			ORDER BY id DESC
 			""")
 	List<Board> selectAll();
-	
+
 	@Select("""
-			SELECT * 
+			SELECT *
 			FROM Board
 			WHERE id = #{id}
 			""")
@@ -30,7 +29,7 @@ public interface BoardMapper {
 
 	@Update("""
 			UPDATE Board
-			SET
+			SET 
 				title = #{title},
 				body = #{body},
 				writer = #{writer}
@@ -46,17 +45,31 @@ public interface BoardMapper {
 	int deleteById(Integer id);
 
 	@Insert("""
-			INSERT INTO Board (title,body,writer)
-			VALUES(#{title},#{body},#{writer})
+			INSERT INTO Board (title, body, writer)
+			VALUES (#{title}, #{body}, #{writer})
 			""")
-	
-	@Options(useGeneratedKeys = true,keyProperty = "id")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(Board board);
-	
+
+	@Select("""
+			SELECT
+				id,
+				title,
+				writer,
+				inserted
+			FROM Board
+			ORDER BY id DESC
+			LIMIT #{startIndex}, #{rowPerPage}
+			""")
+	List<Board> selectAllPaging(Integer startIndex, Integer rowPerPage);
+
+	@Select("""
+			SELECT COUNT(*) 
+			FROM Board
+			""")
+	Integer countAll();
 	
 
 	
-	
-	
-	
 }
+
