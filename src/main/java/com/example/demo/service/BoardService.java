@@ -40,16 +40,16 @@ public class BoardService {
 		return cnt == 1;
 	}
 
-	public Map<String, Object> listBoard(Integer page) {
+	public Map<String, Object> listBoard(Integer page, String search) {
 		// 페이지당 행의 수
-		Integer rowPerPage = 5;
+		Integer rowPerPage = 15;
 		
 		// 쿼리 LIMIT 절에 사용할 시작 인덱스
 		Integer startIndex = (page - 1) * rowPerPage;
 		
 		// 페이지네이션이 필요한 정보
 		// 전체 레코드 수
-		Integer numOfRecords = mapper.countAll();
+		Integer numOfRecords = mapper.countAll(search);
 		// 마지막 페이지 번호
 		Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
 		// 페이지네이션 왼쪽번호
@@ -69,7 +69,7 @@ public class BoardService {
 		pageInfo.put("lastPageNum", lastPageNumber);
 		
 		// 게시물 목록
-		List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage);
+		List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
 		
 		return Map.of("pageInfo", pageInfo, 
 				      "boardList", list);
