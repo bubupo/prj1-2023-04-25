@@ -34,6 +34,7 @@
 						<td>${board.id }</td>
 						<td>
 							<a href="/id/${board.id }"> ${board.title } </a>
+							<span>파일 : ${board.fileCount }</span>
 						</td>
 						<td>${board.writer }</td>
 						<td>${board.inserted }</td>
@@ -50,44 +51,24 @@
 
 					<!-- 이전 버튼 -->
 					<c:if test="${pageInfo.currentPageNum gt 1 }">
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageInfo.currentPageNum - 1 }" />
-							<c:if test="${not empty param.search }">
-								<c:param name="search" value="${param.search }" />
-							</c:if>
-						</c:url>
-						<li class="page-item">
-							<a class="page-link" href="${pageLink }">
-								<i class="fa-solid fa-angle-left"></i>
-							</a>
-						</li>
+						<my:pageItem pageNum="${pageInfo.currentPageNum - 1 }">
+							<i class="fa-solid fa-angle-left"></i>
+						</my:pageItem>
 					</c:if>
 
 					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageNum }" />
-							<c:if test="${not empty param.search }">
-								<c:param name="search" value="${param.search }" />
-							</c:if>
-						</c:url>
-						<li class="page-item">
-							<a class="page-link ${pageNum eq pageInfo.currentPageNum ? 'active' : '' }" href="${pageLink }">${pageNum }</a>
-						</li>
+						<my:pageItem pageNum="${pageNum }">
+							${pageNum }
+						</my:pageItem>
 					</c:forEach>
 
 					<!-- 다음 버튼 -->
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageInfo.currentPageNum + 1 }" />
-							<c:if test="${not empty param.search }">
-								<c:param name="search" value="${param.search }" />
-							</c:if>
-						</c:url>
-						<li class="page-item">
-							<a class="page-link" href="${pageLink }">
-								<i class="fa-solid fa-angle-right"></i>
-							</a>
-						</li>
+						<%-- 페이지 번호 : ${pageInfo.currentPageNum + 1 } --%>
+						<my:pageItem pageNum="${pageInfo.currentPageNum + 1 }">
+							<i class="fa-solid fa-angle-right"></i>
+						</my:pageItem>
+					
 					</c:if>
 
 				</ul>
@@ -100,3 +81,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
+
+
+
+
+
+
