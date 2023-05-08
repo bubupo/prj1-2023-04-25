@@ -37,7 +37,11 @@ public interface MemberMapper {
 
 	@Update("""
 			UPDATE Member
-			SET password = #{password},
+			SET 
+			<if test="password neq null and password neq ''">
+				password = #{password},
+			</if>
+			
 			    nickName = #{nickName},
 			    email = #{email}
 			WHERE
