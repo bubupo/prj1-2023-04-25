@@ -16,80 +16,62 @@
 
 	<my:alert></my:alert>
 
-
 	<div class="container-lg">
-
-		<!-- .row.justify-content-center>.col-12.col-md-8.col-lg-6 -->
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
-				<h1>${board.id }번 게시물</h1>
-				<div>
-					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
-					</div>
-					
-					<!-- 그림 파일 출력 -->
-					<div class="mb-3">
-						<c:forEach items="${board.fileName }" var="fileName" >
-							<div class="mb-3">
-								<img class="img-thumbnail img-fluid" src="${bucketUrl }/${board.id }/${fileName}" alt="" />
-							</div>
-						</c:forEach>
-					</div>
-					
-					
-					<div class="mb-3">
-						<label for="" class="form-label">본문</label>
-						<textarea class="form-control" readonly rows="10">${board.body }</textarea>
-					</div>
-					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input type="text" class="form-control" value="${board.writer }" readonly />
-					</div>
-					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input type="text" readonly class="form-control" value="${board.inserted }" />
-					</div>
-					<div>
-
-						<a class="btn btn-secondary" href="/modify/${board.id }">수정</a>
-						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
-					</div>
+				<h1>회원 정보</h1>
+				<!-- .mb-3*4>label+input -->
+				<div class="mb-3">
+					<label class="form-label" for="">아이디</label>
+					<input class="form-control" type="text" value="${member.id }" readonly />
 				</div>
+				<div class="mb-3">
+					<label class="form-label" for="">패스워드</label>
+					<input class="form-control" type="text" value="${member.password }" readonly />
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="">별명</label>
+					<input class="form-control" type="text" value="${member.nickName }" readonly />
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="">이메일</label>
+					<input class="form-control" type="text" value="${member.email }" readonly />
+				</div>
+
+				<a class="btn btn-secondary" href="/member/modify?id=${member.id }">수정</a>
+				<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">탈퇴</button>
 			</div>
 		</div>
 	</div>
 
-	<div class="d-none">
-		<form action="/remove" method="post" id="removeForm">
-			<input type="text" name="id" value="${board.id }" />
-		</form>
-	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- 탈퇴 확인 Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+					<h1 class="modal-title fs-5" id="exampleModalLabel">탈퇴 확인</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">삭제 하시겠습니까?</div>
+				<div class="modal-body">
+					<form id="removeForm" action="/member/remove" method="post">
+						<input type="hidden" name="id" value="${member.id }" />
+						<label for="passwordInput1">암호</label>
+						<input id="passwordInput1" type="password" name="password" class="form-control" />
+					</form>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="submit" class="btn btn-danger" form="removeForm" >삭제</button>
+					<button type="submit" form="removeForm" class="btn btn-danger">확인</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 </body>
 </html>
-
 
 
 
