@@ -36,16 +36,20 @@ public interface MemberMapper {
 	Integer deleteById(String id);
 
 	@Update("""
+			<script>
+			
 			UPDATE Member
 			SET 
-			<if test="password neq null and password neq ''">
+				<if test="password neq null and password neq ''">
 				password = #{password},
-			</if>
-			
+				</if>
+				
 			    nickName = #{nickName},
 			    email = #{email}
 			WHERE
 				id = #{id}
+			
+			</script>
 			""")
 	Integer update(Member member);
 }

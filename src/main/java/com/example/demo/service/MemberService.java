@@ -55,10 +55,10 @@ public class MemberService {
 
 	public boolean modify(Member member, String oldPassword) {
 		
-		// 패스워드를 바꾸기 위해 입력 했다면
+		// 패스워드를 바꾸기 위해 입력했다면...
 		if (!member.getPassword().isBlank()) {
 			
-			//입력된 패스워드를 암호화
+			// 입력된 패스워드를 암호화
 			String plain = member.getPassword();
 			member.setPassword(passwordEncoder.encode(plain));
 		}
