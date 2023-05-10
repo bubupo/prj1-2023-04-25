@@ -88,7 +88,7 @@ public class BoardController {
 	}
 
 	@PostMapping("remove")
-	@PreAuthorize("isAuthenticated() and @customSecurityChecker.checkBoardWriter(authentication, #id)")
+	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)")
 	public String remove(Integer id, RedirectAttributes rttr) {
 		boolean ok = service.remove(id);
 		if (ok) {
