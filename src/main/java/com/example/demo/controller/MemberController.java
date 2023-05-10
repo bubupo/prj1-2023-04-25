@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.*;
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
 
+import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 
 @Controller
@@ -58,7 +59,7 @@ public class MemberController {
 	
 	// 경로: /member/info?id=asdf
 	@GetMapping("info")
-	@PreAuthorize("isAuthenticated() and (authentication.name eq #id)")
+	@PreAuthorize("hasAuthority('admin') or (isAuthenticated() and (authentication.name eq #id))")
 	public void info(String id, Model model) {
 		
 		Member member = service.get(id);
@@ -67,19 +68,18 @@ public class MemberController {
 	}
 	
 	@PostMapping("remove")
-	@PreAuthorize("isAuthenticated()")
-	public String remove(Member member,
+	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)")
+	public String remove(Member member, 
 			RedirectAttributes rttr,
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request) throws Exception {
 		
 		boolean ok = service.remove(member);
 		
 		if (ok) {
 			rttr.addFlashAttribute("message", "회원 탈퇴하였습니다.");
 			
-			//로그아웃
+			// 로그아웃
 			request.logout();
-			
 			
 			return "redirect:/list";
 		} else {
@@ -101,7 +101,7 @@ public class MemberController {
 	
 	// 2.
 	@PostMapping("modify")
-	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)")
+	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id) ")
 	public String modifyProcess(Member member, String oldPassword, RedirectAttributes rttr) {
 		boolean ok = service.modify(member, oldPassword);
 		
