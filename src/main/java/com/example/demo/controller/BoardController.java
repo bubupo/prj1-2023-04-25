@@ -88,7 +88,7 @@ public class BoardController {
 	}
 
 	@PostMapping("remove")
-	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)")
+	@PreAuthorize("isAuthenticated() and @customSecurityChecker.checkBoardWriter(authentication, #id)")
 	public String remove(Integer id, RedirectAttributes rttr) {
 		boolean ok = service.remove(id);
 		if (ok) {
@@ -132,4 +132,24 @@ public class BoardController {
 			return "redirect:/add";
 		}
 	}
+	
+	@PostMapping("/like")
+	@ResponseBody
+	public Map<String, Object> like(
+			@RequestBody Like like,
+			Authentication authentication) {
+
+		return service.like(like, authentication);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -41,6 +41,7 @@
 									<i class="fa-regular fa-images"></i>
 									${board.fileCount }
 								</span>
+							
 							</c:if>
 							
 						</td>

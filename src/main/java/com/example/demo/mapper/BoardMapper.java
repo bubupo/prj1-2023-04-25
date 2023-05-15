@@ -142,7 +142,7 @@ public interface BoardMapper {
 			""")
 	List<Integer> selectIdByWriter(String writer);
 	
-
+	
 	
 }
 
