@@ -24,6 +24,12 @@
 					<div class="mb-3">
 						<label for="inputId" class="form-label">아이디</label>
 						<input id="inputId" type="text" class="form-control" name="id" value="${member.id }" />
+						
+						<div id="availableIdMessage">사용가능한 ID입니다.</div>
+						<div id="notAvailableIdMessage">사용 불가능한 ID입니다.</div>
+						
+						<button type="button" id="checkIdBtn">중복확인</button>
+						
 					</div>
 					<div class="mb-3">
 						<label for="inputPassword" class="form-label">패스워드</label>
@@ -34,14 +40,16 @@
 						<label for="inputPasswordCheck" class="form-label">패스워드 확인</label>
 						<input id="inputPasswordCheck" type="password" class="form-control" />
 						
-						<div id="passwordSuccessText" class =" d-none form-text text-primary"> 
+						<div id="passwordSuccessText" class="d-none form-text text-primary">
 							<i class="fa-solid fa-check"></i>
-							패스워드가 일치 합니다
+							패스워드가 일치 합니다.
 						</div>
-						<div id="passwordFailText" class =" d-none form-text text-danger">
+						
+						<div id="passwordFailText" class="d-none form-text text-danger">
 							<i class="fa-solid fa-triangle-exclamation"></i>
-						 	패스워드가 일치하지 않습니다.
+							패스워드가 일치하지 않습니다.
 						</div>
+						
 					</div>
 					
 					<div class="mb-3">
@@ -66,7 +74,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	
 	<script src="/js/member/signup.js"></script>
-	
 	
 	
 </body>
