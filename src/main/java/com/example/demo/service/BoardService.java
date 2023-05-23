@@ -30,6 +30,9 @@ public class BoardService {
 	
 	@Autowired
 	private BoardLikeMapper likeMapper;
+	
+	@Autowired
+	private CommentMapper commentMapper;
 
 	public List<Board> listBoard() {
 		List<Board> list = mapper.selectAll();
@@ -37,15 +40,18 @@ public class BoardService {
 	}
 
 	public Board getBoard(Integer id, Authentication authentication) {
-	  Board board =  mapper.selectById(id);
-	  
-	  if(authentication != null) {
-		 Like like =  likeMapper.select(id, authentication.getName());
-		 if(like != null) {
-			 board.setLiked(true);
-		 }
-	  }
-	  return board;
+		Board board = mapper.selectById(id);
+
+		
+		// 현재 로그인한 사람이 이 게시물에 좋아요 했는지?
+		if (authentication != null) {
+			Like like = likeMapper.select(id, authentication.getName());
+			if (like != null) {
+				board.setLiked(true);
+			}
+		}
+		
+		return board;
 	}
 
 	public boolean modify(Board board, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
@@ -92,9 +98,14 @@ public class BoardService {
 
 	public boolean remove(Integer id) {
 
-		//좋아요 테이블 지우기
+		// 댓글 테이블 지우기
+		commentMapper.deleteByBoardId(id);
+		
+		// 좋아요 테이블 지우기
 		likeMapper.deleteByBoardId(id);
 		
+		
+
 		// 파일명 조회
 		List<String> fileNames = mapper.selectFileNamesByBoardId(id);
 
@@ -110,6 +121,8 @@ public class BoardService {
 					.build();
 			s3.deleteObject(dor);
 		}
+		
+		
 
 		// 게시물 테이블의 데이터 지우기
 		int cnt = mapper.deleteById(id);
@@ -207,11 +220,10 @@ public class BoardService {
 	}
 
 	public Board getBoard(Integer id) {
-		
-		return getBoard(id,null);
+		// TODO Auto-generated method stub
+		return getBoard(id, null);
 	}
 }
-
 
 
 

@@ -15,7 +15,6 @@
 	<my:navBar></my:navBar>
 
 	<div class="container-lg">
-	
 		<div class="row justify-content-center">
 			<div class="col-12">
 				<h1>회원 목록</h1>

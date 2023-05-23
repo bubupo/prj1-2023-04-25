@@ -19,23 +19,23 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = mapper.selectById(username);
 		
-	
-
 		if (member == null) {
 			throw new UsernameNotFoundException(username + " 회원이 없습니다.");
 		}
-
-		//
-//		List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-//		
-//		for (String auth : member.getAuthority()) {
-//			authorityList.add(new SimpleGrantedAuthority(auth));
-//		}
 		
+		//
+		
+		List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+		
+		for (String auth : member.getAuthority()) {
+			authorityList.add(new SimpleGrantedAuthority(auth));
+		}
+
 		UserDetails user = User.builder()
 				.username(member.getId())
 				.password(member.getPassword())
-				.authorities(member.getAuthority().stream().map(SimpleGrantedAuthority::new).toList())
+				.authorities(authorityList)
+//				.authorities(member.getAuthority().stream().map(SimpleGrantedAuthority::new).toList())
 				.build();
 
 		return user;

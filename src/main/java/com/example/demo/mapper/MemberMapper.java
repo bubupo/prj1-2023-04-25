@@ -24,7 +24,7 @@ public interface MemberMapper {
 
 	@Select("""
 			SELECT *
-			FROM Member m  LEFT JOIN MemberAuthority ma ON m.id = ma.memberId
+			FROM Member m LEFT JOIN MemberAuthority ma ON m.id = ma.memberId
 			WHERE id = #{id}
 			""")
 	@ResultMap("memberMap")
@@ -55,18 +55,16 @@ public interface MemberMapper {
 	Integer update(Member member);
 
 	@Select("""
-			SELECT * 
+			SELECT *
 			FROM Member
 			WHERE nickName = #{nickName}
 			""")
-	Member selectByNickName(String nickname);
+	Member selectByNickName(String nickName);
 
-	
 	@Select("""
-			SELECT *
+			SELECT * 
 			FROM Member
 			WHERE email = #{email}
-			
 			""")
 	Member selectByEmail(String email);
 }

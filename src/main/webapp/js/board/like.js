@@ -19,7 +19,7 @@ $("#likeIcon").click(function() {
 				// 빈 하트
 				$("#likeIcon").html(`<i class="fa-regular fa-heart"></i>`);
 			}
-			//좋아요 수 업데이트
+			// 좋아요 수 업데이트
 			$("#likeNumber").text(data.count);
 		},
 		error: function(jqXHR) {

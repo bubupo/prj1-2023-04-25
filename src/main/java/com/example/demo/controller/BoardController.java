@@ -46,12 +46,13 @@ public class BoardController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String board(@PathVariable("id") Integer id,
+	public String board(
+			@PathVariable("id") Integer id,
 			Model model,
 			Authentication authentication) {
 		// 1. request param
 		// 2. business logic
-		Board board = service.getBoard(id , authentication);
+		Board board = service.getBoard(id, authentication);
 		// 3. add attribute
 		model.addAttribute("board", board);
 		// 4. forward/redirect
@@ -138,21 +139,19 @@ public class BoardController {
 	
 	@PostMapping("/like")
 	@ResponseBody
-	public ResponseEntity<Map<String,Object>> like(
+	public ResponseEntity<Map<String, Object>> like(
 			@RequestBody Like like,
 			Authentication authentication) {
-		
-		System.out.println(authentication);
 		
 		if (authentication == null) {
 			return ResponseEntity
 					.status(403)
-					.body(Map.of("message","로그인 후 좋아요 클릭 해 주세요."));
-		}else {
+					.body(Map.of("message", "로그인 후 좋아요 클릭 해주세요."));
+		} else {
+			
 			return ResponseEntity
 					.ok()
 					.body(service.like(like, authentication));
-			
 		}
 	}
 }

@@ -14,5 +14,4 @@
 			<result column="authority"></result>
 		</collection>
 	</resultMap>
-
 </mapper>

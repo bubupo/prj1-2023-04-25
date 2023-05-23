@@ -33,7 +33,6 @@
 				<div class="mb-3">
 					<label class="form-label" for="">별명</label>
 					<input class="form-control" type="text" value="${member.nickName }" readonly />
-					
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">이메일</label>
